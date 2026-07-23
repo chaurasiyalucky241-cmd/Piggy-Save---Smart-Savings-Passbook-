@@ -1,29 +1,23 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5E8A,50:F78FB3,100:C56CF0&height=250&section=header&text=Piggy%20Save&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Smart%20Savings%20Passbook%20For%20Friends%20%26%20Families&descAlignY=60"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5E8A,50:F78FB3,100:C56CF0&height=280&section=header&text=Piggy%20Save&fontSize=60&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=Smart%20Savings%20Passbook%20For%20Friends%20%26%20Families&descAlignY=60"/>
+
+<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=900&size=34&duration=2500&pause=1000&color=FF5E8A&center=true&vCenter=true&width=900&lines=Smart+Savings+Passbook;Modern+Banking+Frontend;Built+with+HTML+CSS+JavaScript;Responsive+Glassmorphism+UI" />
+
+<br>
+
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/Responsive-Yes-00C853?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Frontend-Project-FF5E8A?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-1.0-purple?style=for-the-badge"/>
 
 <h1>🐷 Piggy Save</h1>
 
-<h3>💰 Smart Savings Passbook For Friends & Families</h3>
+### 💰 Smart Savings Passbook For Friends & Families
 
-<p>
-A cute and modern digital savings application with Login, Signup, UPI Deposit,
-Savings Goal Tracking, Passbook History, Community Reviews and beautiful UI.
-</p>
-
-<p>
-
-<img src="https://img.shields.io/badge/Version-1.0-FF5E8A?style=for-the-badge"/>
-
-<img src="https://img.shields.io/badge/HTML-5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/CSS-3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-
-<img src="https://img.shields.io/badge/Responsive-Yes-00C853?style=for-the-badge"/>
-
-</p>
+A modern digital savings application with Login, Signup, UPI Deposit, Savings Goal Tracking, Passbook History, Community Reviews and beautiful Glassmorphism UI.
 
 </div>
 
@@ -31,95 +25,100 @@ Savings Goal Tracking, Passbook History, Community Reviews and beautiful UI.
 
 # 📖 About
 
-Piggy Save is a frontend banking-inspired web application that helps users manage their savings through a beautiful and interactive interface.
+Piggy Save is a modern frontend banking-inspired web application designed to make saving money simple, engaging, and enjoyable.
 
-The project provides a digital passbook experience with a modern UI, responsive layout, savings goal tracking, UPI deposit interface, passbook history, community reviews, and Dark Mode support.
+The application allows users to:
+
+- Create an account
+- Login securely
+- Deposit savings using UPI
+- Withdraw money
+- Set savings goals
+- Track complete passbook history
+- Read and submit community reviews
+- Experience beautiful modern animations
 
 ---
 
 # ✨ Features
 
 - 🐷 Cute Piggy Mascot
-- 🔐 Login Page
-- 📝 Signup Page
-- 💰 UPI Deposit
+- 🔐 Login & Signup
+- 💰 Digital Savings Passbook
+- 💳 UPI Deposit
 - 💸 Withdraw Money
-- 🎯 Savings Goal
+- 🎯 Savings Goal Tracker
 - 📊 Dashboard
 - 📜 Passbook History
 - ⭐ Community Reviews
 - 🎁 Cashback Offer
 - 🌙 Dark Mode
-- 📱 Responsive Design
-- 🎨 Glassmorphism UI
+- 📱 Fully Responsive
+- 🎨 Glassmorphism Design
 - ⚡ Smooth Animations
 
 ---
 
 # 🛠 Tech Stack
 
-<p align="center">
+<div align="center">
 
 <img src="https://skillicons.dev/icons?i=html,css,javascript,vscode,git,github"/>
 
-</p>
+</div>
+
+| Technology | Purpose |
+|------------|---------|
+| HTML5 | Page Structure |
+| CSS3 | Styling & Animations |
+| JavaScript | Interactive Features |
+| Git | Version Control |
+| GitHub | Repository Hosting |
 
 ---
 
-# 📸 Project Screenshots
+# 📸 Project Gallery
 
-## 🔐 Login Page
+<div align="center">
 
-<p align="center">
+| 🔐 Login Page | 📊 Dashboard |
+|:-------------:|:------------:|
+| <img src="./Screenshot%202026-07-23%20211416.png" width="450"> | <img src="./Screenshot%202026-07-23%20211500.png" width="450"> |
 
-<img src="./Screenshot%202026-07-23%20211416.png" width="900"/>
+| ⭐ Community Reviews | 📝 Create Account |
+|:--------------------:|:----------------:|
+| <img src="./Screenshot%202026-07-23%20211509.png" width="450"> | <img src="./Screenshot%202026-07-23%20211530.png" width="450"> |
 
-</p>
-
-Modern login interface with social login, cashback offers and Dark Mode.
-
----
-
-## 📊 Dashboard
-
-<p align="center">
-
-<img src="./Screenshot%202026-07-23%20211500.png" width="900"/>
-
-</p>
-
-Users can deposit money, withdraw savings, set savings goals and manage passbook history.
+</div>
 
 ---
 
-## ⭐ Community Reviews
+# 🚀 Getting Started
 
-<p align="center">
+## Clone Repository
 
-<img src="./Screenshot%202026-07-23%20211509.png" width="900"/>
+```bash
+git clone https://github.com/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-.git
+```
 
-</p>
+Open Project
 
-Interactive rating system where users can submit reviews and read community feedback.
+```bash
+cd Piggy-Save---Smart-Savings-Passbook-
+```
 
----
-
-## 📝 Signup Page
-
-<p align="center">
-
-<img src="./Screenshot%202026-07-23%20211530.png" width="900"/>
-
-</p>
-
-Beautiful registration page with cashback offers and animated Piggy mascot.
-
----
-
-# 📂 Project Structure
+Run
 
 ```text
-Piggy-Save---Smart-Savings-Passbook-/
+Open HTML.html
+```
+
+---
+
+# 📂 Folder Structure
+
+```text
+Piggy-Save---Smart-Savings-Passbook-
 
 │── HTML.html
 │── CSS.css
@@ -134,44 +133,24 @@ Piggy-Save---Smart-Savings-Passbook-/
 
 ---
 
-# 🚀 Getting Started
-
-## Clone Repository
-
-```bash
-git clone https://github.com/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-.git
-```
-
-Go to project folder
-
-```bash
-cd Piggy-Save---Smart-Savings-Passbook-
-```
-
-Open
-
-```text
-HTML.html
-```
-
----
-
-# 🌟 Future Enhancements
+# 🌟 Future Improvements
 
 - 🤖 AI Saving Assistant
 - ☁ Cloud Database
-- 📱 Mobile Application
+- 📱 Android Application
 - 💳 Real UPI Integration
-- 📊 Savings Analytics
-- 🔔 Notifications
+- 📊 Monthly Analytics
+- 📈 Savings Reports
+- 🔔 Smart Notifications
 - 👨‍👩‍👧 Family Wallet
-- 📈 Expense Reports
 
 ---
 
 # 🤝 Collaborators
 
-<table align="center">
+<div align="center">
+
+<table>
 
 <tr>
 
@@ -233,41 +212,43 @@ Frontend Developer
 
 </table>
 
+</div>
+
 ---
 
 # 💡 Why Piggy Save?
 
 ✔ Beginner Friendly
 
-✔ Attractive Banking UI
+✔ Banking Inspired UI
 
-✔ Modern Glassmorphism Design
+✔ Beautiful Glassmorphism Design
 
 ✔ Responsive Layout
 
 ✔ Interactive User Experience
 
-✔ Frontend Project
+✔ Clean & Organized Code
 
 ✔ Easy to Customize
 
 ---
 
-# ⭐ Support
+# 📄 License
 
-If you like this project,
+This project is licensed under the **MIT License**.
+
+---
+
+# ⭐ Show Your Support
+
+If you like this project:
 
 ⭐ Star this repository
 
 🍴 Fork this repository
 
-❤️ Share it with your friends
-
----
-
-# 📜 License
-
-This project is licensed under the MIT License.
+💖 Share it with your friends
 
 ---
 
@@ -275,8 +256,8 @@ This project is licensed under the MIT License.
 
 ## ❤️ Made with Love by
 
-### Lucky Chaurasiya & Ankit Kumar
+### Lucky Chaurasiya ❤️ Ankit Kumar
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:C56CF0,100:FF5E8A&height=150&section=footer"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:C56CF0,100:FF5E8A&height=160&section=footer"/>
 
 </div>
