@@ -182,7 +182,7 @@ Open index.html
 
 <br>
 
-Frontend Developer
+Java Developer
 
 <br><br>
 
