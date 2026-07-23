@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piggy Save — Interactive Cuddle Squad Passbook</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       Design System & Themes
+       ========================================== */
+    :root {
+      --bg-main: #f1e4f7;
+      --bg-card: #ffffff;
+      --primary: #9b51e0;
+      --primary-hover: #8234cb;
+      --accent-pink: #ff6584;
+      --accent-green: #209a73;
+      --text-main: #332244;
+      --text-muted: #8c739e;
+      --border-color: #e5d2f2;
+      --input-bg: #f9f4fc;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-logo: 'Comfortaa', cursive;
+    }
+
+    body.dark-mode {
+      --bg-main: #130d1a;
+      --bg-card: #1f162b;
+      --primary: #b366ff;
+      --accent-pink: #ff6584;
+      --accent-green: #25c993;
+      --text-main: #f3ebfc;
+      --text-muted: #ad96c2;
+      --border-color: #332345;
+      --input-bg: #281c38;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------------- Topbar Layout & Centered Brand ---------------- */
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 40px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(155, 81, 224, 0.05);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .topbar-left { display: flex; align-items: center; }
+
+    .brand {
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      animation: floatBrand 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBrand {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: drop-shadow(0 4px 8px rgba(255, 101, 132, 0.35));
+      animation: pulseLogo 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseLogo {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.08) rotate(3deg); }
+    }
+
+    .brand:hover .brand-logo { transform: rotate(20deg) scale(1.2); }
+    
+    .brand-title {
+      font-family: var(--font-logo);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-pink);
+      letter-spacing: -0.03em;
+    }
+
+    .topnav { grid-column: 3; display: flex; justify-content: flex-end; align-items: center; }
+    .nav-user { font-size: 15px; font-weight: 700; color: var(--text-main); margin-right: 16px; }
+
+    .theme-toggle-btn {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 12px;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle-btn:hover { background: var(--border-color); transform: translateY(-2px); }
+
+    .btn-logout {
+      background: linear-gradient(135deg, var(--accent-pink), var(--primary));
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(255, 101, 132, 0.25);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-logout:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 20px rgba(255, 101, 132, 0.45); }
+    
+    /* ---------------- Interactive Buttons ---------------- */
+    .btn {
+      font-family: var(--font-main);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-primary { 
+      background: linear-gradient(135deg, var(--accent-pink), var(--primary)); 
+      color: #fff; 
+      width: 100%; 
+      box-shadow: 0 4px 14px rgba(255, 101, 132, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 22px rgba(255, 101, 132, 0.45); }
+    
+    .btn-secondary { background: var(--accent-pink); color: #fff; border-radius: 25px; padding: 10px 22px; font-weight: 700; box-shadow: 0 4px 10px rgba(255, 101, 132, 0.25); }
+    .btn-secondary:hover { background: #e04f6d; transform: translateY(-2px) scale(1.03); }
+    
+    .btn-ghost { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 25px; }
+    .btn-ghost:hover { background: var(--input-bg); color: var(--text-main); transform: translateY(-2px); border-color: var(--primary); }
+
+    /* ---------------- Auth Split Layout ---------------- */
+    .auth-container { display: flex; min-height: calc(100vh - 67px); width: 100%; background: var(--bg-card); overflow: hidden; }
+    
+    .auth-hero {
+      flex: 1.15;
+      background: linear-gradient(135deg, #fceeff 0%, #ffdce5 50%, #e8d7ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      position: relative;
+      border-radius: 0 30px 30px 0;
+    }
+
+    body.dark-mode .auth-hero { background: linear-gradient(135deg, #2b173b 0%, #3a1c31 50%, #201330 100%); }
+
+    .organic-shape {
+      width: 95%;
+      max-width: 520px;
+      height: 540px;
+      background: rgba(255, 255, 255, 0.72);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(155, 81, 224, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.9);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      animation: morphingBlob 9s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    @keyframes morphingBlob {
+      0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      33% { border-radius: 40% 60% 70% 30% / 50% 60% 30% 60%; }
+      66% { border-radius: 70% 30% 50% 50% / 30% 50% 60% 70%; }
+      100% { border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; }
+    }
+
+    /* ---------------- Speech Bubble Pop-up ---------------- */
+    .speech-bubble {
+      position: absolute;
+      top: 15px;
+      background: #FFFFFF;
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(155, 81, 224, 0.2);
+      border: 2px solid var(--accent-pink);
+      opacity: 0;
+      transform: translateY(10px) scale(0.8);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 20;
+    }
+    .speech-bubble.active {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px 8px 0;
+      border-style: solid;
+      border-color: var(--accent-pink) transparent;
+      display: block;
+      width: 0;
+    }
+
+    /* ---------------- Cuddle Pile SVG & Animations ---------------- */
+    .auth-hero-svg {
+      width: 330px;
+      height: 280px;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 14px 28px rgba(255, 101, 132, 0.28));
+      cursor: pointer;
+    }
+
+    .ear-left, .ear-right {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      transition: transform 0.3s ease;
+    }
+
+    /* Ear Wiggles */
+    .pig-ear-l { animation: earWiggle 3.2s ease-in-out infinite; }
+    .pig-ear-r { animation: earWiggle 3.2s ease-in-out infinite 0.2s; }
+    .bunny-ear-l { animation: earWiggle 2.7s ease-in-out infinite 0.4s; }
+    .bunny-ear-r { animation: earWiggle 2.7s ease-in-out infinite 0.1s; }
+    .bear-ear-l { animation: earWiggle 3.5s ease-in-out infinite 0.5s; }
+    .bear-ear-r { animation: earWiggle 3.5s ease-in-out infinite 0.2s; }
+    .kitty-ear-l { animation: earWiggle 2.9s ease-in-out infinite 0.3s; }
+    .kitty-ear-r { animation: earWiggle 2.9s ease-in-out infinite 0.6s; }
+
+    @keyframes earWiggle {
+      0%, 82%, 100% { transform: rotate(0deg); }
+      87% { transform: rotate(-10deg); }
+      92% { transform: rotate(8deg); }
+      97% { transform: rotate(-4deg); }
+    }
+
+    .pupil-group { transition: transform 0.1s ease-out; }
+    .eye-open { transition: opacity 0.2s ease; }
+    .eye-closed { stroke: #2B1B38; stroke-width: 3.5; fill: none; stroke-linecap: round; opacity: 0; transition: opacity 0.2s ease; }
+
+    /* ---------------- REACTIVE EMOTIONS LOGIC ---------------- */
+    
+    /* 1. SHY MODE (Password Hover 🙈) */
+    .squad-svg.emotion-shy .eye-open { opacity: 0; }
+    .squad-svg.emotion-shy .eye-closed { opacity: 1; }
+
+    /* 2. EXCITED / HAPPY MODE (On Login & Primary Buttons 😄) */
+    .squad-svg.emotion-excited .pupil-group { transform: scale(1.22); }
+    .squad-svg.emotion-excited { animation: excitedBounceAll 0.5s ease infinite alternate; }
+
+    @keyframes excitedBounceAll {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-12px); }
+    }
+
+    /* 3. SAD MODE (On Logout 🥺) */
+    .squad-svg.emotion-sad .ear-left { transform: rotate(-22deg) !important; }
+    .squad-svg.emotion-sad .ear-right { transform: rotate(22deg) !important; }
+    .squad-svg.emotion-sad .pupil-group { transform: translateY(4px) scale(0.85); }
+    .squad-svg.emotion-sad .pig-mouth { d: path("M 138 182 Q 150 172 162 182") !important; }
+    .squad-svg.emotion-sad .bunny-mouth { d: path("M 141 89 Q 145 84 149 89") !important; }
+
+    /* 4. NERVOUS MODE (Withdraw 😬) */
+    .squad-svg.emotion-nervous .pupil-group { transform: scale(0.68); }
+
+    .auth-hero-title { color: var(--text-main); font-size: 26px; font-weight: 700; margin-bottom: 6px; text-align: center; }
+    .auth-hero-subtitle { color: var(--text-muted); font-size: 13px; text-align: center; max-width: 330px; line-height: 1.4; }
+
+    /* Form Side */
+    .auth-form-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; background: var(--bg-card); }
+    .auth-card { width: 100%; max-width: 380px; }
+    .auth-card h2 { font-size: 26px; font-weight: 700; text-align: center; margin-bottom: 24px; color: var(--text-main); }
+    
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .form-group input, textarea {
+      width: 100%; padding: 12px 20px; font-size: 14px; font-family: var(--font-main);
+      border: 1.5px solid var(--border-color); border-radius: 25px; background: var(--input-bg);
+      color: var(--text-main); outline: none; transition: all 0.3s ease;
+    }
+    textarea { border-radius: 16px; resize: none; }
+
+    .form-error { color: var(--accent-pink); font-size: 13px; margin-top: 8px; }
+    .form-msg { color: var(--accent-green); font-size: 13px; margin-top: 8px; }
+
+    .divider { display: flex; align-items: center; text-align: center; color: var(--text-muted); font-size: 12px; margin: 24px 0; width: 100%; }
+    .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-color); }
+    .divider span { padding: 0 12px; }
+
+    .social-btn-group { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+    .social-btn {
+      width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border-color);
+      background: var(--bg-card); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .social-btn:hover { background: var(--input-bg); transform: translateY(-4px) scale(1.1); box-shadow: 0 6px 15px rgba(155, 81, 224, 0.15); }
+
+    .toggle-auth { text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 16px; }
+    .toggle-auth a { color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
+
+    /* ---------------- PROMOTIONAL AD BANNERS ON LOGIN ---------------- */
+    .login-ad-banner {
+      width: 100%;
+      max-width: 380px;
+      margin-top: 24px;
+      padding: 14px 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 101, 132, 0.12), rgba(155, 81, 224, 0.12));
+      border: 1.5px dashed var(--accent-pink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-ad-banner:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(255, 101, 132, 0.2);
+    }
+
+    .ad-icon-badge {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-pink);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .ad-text-content h4 { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+    .ad-text-content p { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
+
+    /* ---------------- Dashboard Layout ---------------- */
+    main#app { padding: 32px; width: 100%; max-width: 1400px; margin: 0 auto; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    
+    .card {
+      background: var(--bg-card); border-radius: 24px; padding: 28px;
+      border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(130, 52, 203, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(130, 52, 203, 0.15); border-color: var(--accent-pink); }
+
+    .card-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 8px; }
+    .balance-amount { font-size: 42px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
+
+    .progress-track { height: 12px; background: var(--input-bg); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-pink), var(--primary)); width: 0%; transition: width 0.5s ease; }
+
+    .inline-row { display: flex; gap: 12px; margin-top: 8px; }
+    .inline-row input { flex: 1; border-radius: 25px; padding: 10px 20px; border: 1.5px solid var(--border-color); background: var(--input-bg); font-family: var(--font-main); font-size: 14px; outline: none; }
+
+    .star-rating { display: flex; gap: 8px; margin: 12px 0; }
+    .star-rating span { font-size: 26px; cursor: pointer; color: var(--border-color); }
+    .star-rating span.active { color: #ffca28; }
+
+    .feedback-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .feedback-item { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 12px 16px; font-size: 13px; }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    th { padding: 14px; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border-color); }
+    td { padding: 14px; border-bottom: 1px solid var(--input-bg); }
+
+    /* ---------------- Floating Scroll Mascot Widget ---------------- */
+    .floating-scroll-mascot {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 85px;
+      height: 85px;
+      background: var(--bg-card);
+      border: 2px solid var(--accent-pink);
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(255, 101, 132, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: floatWidget 3s ease-in-out infinite alternate;
+    }
+
+    .floating-scroll-mascot:hover { transform: scale(1.1) rotate(10deg); }
+
+    @keyframes floatWidget {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .scroll-speech-bubble {
+      position: fixed;
+      bottom: 118px;
+      right: 24px;
+      background: #ffffff;
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(155, 81, 224, 0.25);
+      border: 2px solid var(--accent-pink);
+      opacity: 0;
+      transform: translateY(10px) scale(0.8);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .scroll-speech-bubble.active { opacity: 1; transform: translateY(0) scale(1); }
+
+    @media (max-width: 850px) {
+      .auth-container { flex-direction: column; }
+      .auth-hero { display: none; }
+      .grid-2col { grid-template-columns: 1fr; }
+      .topbar { grid-template-columns: 1fr auto; }
+      .brand { grid-column: 1; }
+      .topnav { grid-column: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Topbar with Centered Brand Logo -->
+    <header class="topbar">
+      <div class="topbar-left"></div>
+
+      <!-- CENTER BRAND LOGO WITH FANCY FONT -->
+      <div class="brand">
+        <svg class="brand-logo" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="45" fill="#FF6584"/>
+          <ellipse cx="50" cy="55" rx="25" ry="20" fill="#FFF"/>
+          <circle cx="42" cy="50" r="3" fill="#332244"/>
+          <circle cx="58" cy="50" r="3" fill="#332244"/>
+          <ellipse cx="50" cy="60" rx="8" ry="5" fill="#FF6584"/>
+        </svg>
+        <span class="brand-title">Piggy Save</span>
+      </div>
+
+      <nav class="topnav" id="topnav" hidden>
+        <span class="nav-user" id="navUserName"></span>
+        <button class="theme-toggle-btn" id="btnThemeToggle">🌙 Dark Mode</button>
+        <button class="btn btn-ghost" id="btnAdminToggle" hidden style="margin-right:8px;">Admin View</button>
+        <button class="btn-logout" id="btnLogout">Logout</button>
+      </nav>
+    </header>
+
+    <!-- Floating Scroll Mascot -->
+    <div class="floating-scroll-mascot" id="floatingMascot" title="Click me!">
+      <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+        <ellipse cx="50" cy="53" rx="35" ry="28" fill="#FF5C83"/>
+        <path d="M 18 40 C 10 20, 30 15, 40 32 Z" fill="#E84F70"/>
+        <path d="M 82 40 C 90 20, 70 15, 60 32 Z" fill="#E84F70"/>
+        <ellipse cx="36" cy="46" rx="8" ry="10" fill="#FFFFFF"/>
+        <ellipse cx="36" cy="46" rx="6" ry="8" fill="#2B1B38"/>
+        <circle cx="34" cy="43" r="2.5" fill="#FFFFFF"/>
+        <ellipse cx="64" cy="46" rx="8" ry="10" fill="#FFFFFF"/>
+        <ellipse cx="64" cy="46" rx="6" ry="8" fill="#2B1B38"/>
+        <circle cx="62" cy="43" r="2.5" fill="#FFFFFF"/>
+        <ellipse cx="50" cy="60" rx="10" ry="7" fill="#FFFFFF"/>
+        <circle cx="46" cy="60" r="2" fill="#FF5C83"/>
+        <circle cx="54" cy="60" r="2" fill="#FF5C83"/>
+      </svg>
+    </div>
+    <div class="scroll-speech-bubble" id="scrollSpeechBubble">Saving money with Piggy! 💰</div>
+
+    <!-- Auth Screen -->
+    <section id="authScreen" class="auth-container">
+      <div class="auth-hero" id="authHero">
+        <div class="organic-shape" id="organicShape">
+          
+          <!-- Speech Bubble Pop-up for Character Click -->
+          <div class="speech-bubble" id="speechBubble">Ouch! That tickles! 🐷</div>
+
+          <!-- Perfect Ears Cuddle Stack SVG -->
+          <svg class="auth-hero-svg squad-svg" id="squadSvg" viewBox="0 0 300 250" fill="none">
+            
+            <!-- 1. BUNNY 🐰 -->
+            <g class="bunny-group">
+              <path class="bunny-ear-l ear-left" d="M 124 50 C 108 -10, 134 -10, 138 52 Z" fill="#FFFFFF" stroke="#E5D2F2" stroke-width="2"/>
+              <path d="M 126 48 C 116 2, 130 2, 134 50 Z" fill="#FFCDD2"/>
+              
+              <path class="bunny-ear-r ear-right" d="M 152 52 C 146 -10, 172 -10, 166 50 Z" fill="#FFFFFF" stroke="#E5D2F2" stroke-width="2"/>
+              <path d="M 150 48 C 152 2, 166 2, 162 48 Z" fill="#FFCDD2"/>
+
+              <ellipse cx="145" cy="76" rx="38" ry="32" fill="#FFFFFF" stroke="#E5D2F2" stroke-width="2"/>
+              <circle cx="118" cy="82" r="6" fill="#FF80AB" opacity="0.6"/>
+              <circle cx="172" cy="82" r="6" fill="#FF80AB" opacity="0.6"/>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="130" cy="72" rx="8.5" ry="11" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="130" cy="72" rx="6.5" ry="9" fill="#2B1B38"/>
+                    <circle cx="127" cy="68" r="2.8" fill="#FFFFFF"/>
+                    <circle cx="133" cy="76" r="1.4" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 122 72 Q 130 80 138 72"/>
+              </g>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="160" cy="72" rx="8.5" ry="11" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="160" cy="72" rx="6.5" ry="9" fill="#2B1B38"/>
+                    <circle cx="157" cy="68" r="2.8" fill="#FFFFFF"/>
+                    <circle cx="163" cy="76" r="1.4" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 152 72 Q 160 80 168 72"/>
+              </g>
+
+              <polygon points="143,79 147,79 145,83" fill="#FF6584"/>
+              <path class="bunny-mouth" d="M 141 85 Q 145 89 149 85" stroke="#2B1B38" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </g>
+
+
+            <!-- 2. TEDDY BEAR 🐻 -->
+            <g class="bear-group">
+              <circle class="bear-ear-l ear-left" cx="212" cy="78" r="13" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.8"/>
+              <circle cx="212" cy="78" r="6.5" fill="#BCAAA4"/>
+              <circle class="bear-ear-r ear-right" cx="268" cy="82" r="13" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.8"/>
+              <circle cx="268" cy="82" r="6.5" fill="#BCAAA4"/>
+
+              <ellipse cx="240" cy="108" rx="42" ry="35" fill="#EFEBE9" stroke="#D7CCC8" stroke-width="2"/>
+              <circle cx="210" cy="115" r="7" fill="#FF80AB" opacity="0.5"/>
+              <circle cx="270" cy="115" r="7" fill="#FF80AB" opacity="0.5"/>
+
+              <ellipse cx="240" cy="114" rx="12" ry="9" fill="#FFFFFF"/>
+              <ellipse cx="240" cy="110" rx="5" ry="3.5" fill="#4E342E"/>
+              <path d="M 235 116 Q 240 121 245 116" stroke="#4E342E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="222" cy="100" rx="9" ry="11.5" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="222" cy="100" rx="7" ry="9.5" fill="#2B1B38"/>
+                    <circle cx="219" cy="96" r="3" fill="#FFFFFF"/>
+                    <circle cx="225" cy="104" r="1.5" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 213 100 Q 222 108 231 100"/>
+              </g>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="258" cy="100" rx="9" ry="11.5" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="258" cy="100" rx="7" ry="9.5" fill="#2B1B38"/>
+                    <circle cx="255" cy="96" r="3" fill="#FFFFFF"/>
+                    <circle cx="261" cy="104" r="1.5" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 249 100 Q 258 108 267 100"/>
+              </g>
+            </g>
+
+
+            <!-- 3. KITTY 🐱 -->
+            <g class="kitty-group">
+              <polygon class="kitty-ear-l ear-left" points="26,112 34,78 55,108" fill="#FFE082" stroke="#FFB300" stroke-width="1.8"/>
+              <polygon points="30,110 36,88 48,106" fill="#FF8A65"/>
+              <polygon class="kitty-ear-r ear-right" points="68,106 88,78 96,112" fill="#FFE082" stroke="#FFB300" stroke-width="1.8"/>
+              <polygon points="72,106 85,88 92,110" fill="#FF8A65"/>
+
+              <ellipse cx="62" cy="135" rx="40" ry="34" fill="#FFF8E1" stroke="#FFE082" stroke-width="2"/>
+              <circle cx="32" cy="141" r="7" fill="#FF80AB" opacity="0.6"/>
+              <circle cx="92" cy="141" r="7" fill="#FF80AB" opacity="0.6"/>
+
+              <line x1="16" y1="135" x2="34" y2="136" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
+              <line x1="18" y1="142" x2="34" y2="140" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
+              <line x1="108" y1="136" x2="90" y2="135" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
+              <line x1="106" y1="140" x2="90" y2="142" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="46" cy="126" rx="9" ry="11.5" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="46" cy="126" rx="7" ry="9.5" fill="#2B1B38"/>
+                    <circle cx="43" cy="122" r="3" fill="#FFFFFF"/>
+                    <circle cx="49" cy="130" r="1.5" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 37 126 Q 46 134 55 126"/>
+              </g>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="78" cy="126" rx="9" ry="11.5" fill="#FFFFFF" stroke="#2B1B38" stroke-width="1.8"/>
+                  <g class="pupil-group">
+                    <ellipse cx="78" cy="126" rx="7" ry="9.5" fill="#2B1B38"/>
+                    <circle cx="75" cy="122" r="3" fill="#FFFFFF"/>
+                    <circle cx="81" cy="130" r="1.5" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 69 126 Q 78 134 87 126"/>
+              </g>
+
+              <polygon points="60,133 64,133 62,137" fill="#FF7043"/>
+              <path d="M 58 139 Q 62 143 66 139" stroke="#2B1B38" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </g>
+
+
+            <!-- 4. PIGGY 🐷 (FRONT & CENTER) -->
+            <g class="pig-group">
+              <path class="pig-ear-l ear-left" d="M 112 125 C 92 105, 122 88, 136 118 Z" fill="#E84F70" stroke="#C23856" stroke-width="1.5"/>
+              <path class="pig-ear-r ear-right" d="M 188 125 C 208 105, 178 88, 164 118 Z" fill="#E84F70" stroke="#C23856" stroke-width="1.5"/>
+              
+              <ellipse cx="150" cy="155" rx="48" ry="40" fill="#FF5C83"/>
+              <circle class="pig-blush" cx="114" cy="164" r="8.5" fill="#FF3360"/>
+              <circle class="pig-blush" cx="186" cy="164" r="8.5" fill="#FF3360"/>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="128" cy="144" rx="14" ry="18" fill="#FFFFFF" stroke="#2B1B38" stroke-width="2"/>
+                  <g class="pupil-group" id="pupilLeft">
+                    <ellipse cx="128" cy="144" rx="11" ry="15" fill="#2B1B38"/>
+                    <circle cx="124.5" cy="138.5" r="4.5" fill="#FFFFFF"/>
+                    <circle cx="131.5" cy="149.5" r="2.2" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 114 144 Q 128 156 142 144"/>
+              </g>
+
+              <g class="eye-group">
+                <g class="eye-open">
+                  <ellipse cx="172" cy="144" rx="14" ry="18" fill="#FFFFFF" stroke="#2B1B38" stroke-width="2"/>
+                  <g class="pupil-group" id="pupilRight">
+                    <ellipse cx="172" cy="144" rx="11" ry="15" fill="#2B1B38"/>
+                    <circle cx="168.5" cy="138.5" r="4.5" fill="#FFFFFF"/>
+                    <circle cx="175.5" cy="149.5" r="2.2" fill="#FFFFFF"/>
+                  </g>
+                </g>
+                <path class="eye-closed" d="M 158 144 Q 172 156 186 144"/>
+              </g>
+
+              <path class="pig-mouth" d="M 138 175 Q 150 184 162 175" stroke="#2B1B38" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+              <g class="pig-snout">
+                <ellipse cx="150" cy="164" rx="13" ry="9" fill="#FFFFFF"/>
+                <circle cx="145" cy="164" r="2.8" fill="#FF5C83"/>
+                <circle cx="155" cy="164" r="2.8" fill="#FF5C83"/>
+              </g>
+            </g>
+
+          </svg>
+
+          <h1 class="auth-hero-title">Smart Savings Passbook</h1>
+          <p class="auth-hero-subtitle">Set goals, deposit via UPI, and track your financial growth seamlessly with Piggy & Friends.</p>
+        </div>
+      </div>
+
+      <div class="auth-form-side">
+        <!-- Login -->
+        <div class="auth-card" id="loginBlock">
+          <h2>Log in</h2>
+          <form id="loginForm">
+            <div class="form-group">
+              <label>Login, email or phone number</label>
+              <input type="email" id="loginEmail" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="loginPassword" required placeholder="••••••••" class="input-password">
+            </div>
+            <p class="form-error" id="loginError"></p>
+            <button type="submit" class="btn btn-primary" style="margin-top: 8px;">Log in</button>
+          </form>
+
+          <div class="divider"><span>or log in with</span></div>
+
+          <div class="social-btn-group">
+            <div class="social-btn" title="Google Login">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+            </div>
+            <div class="social-btn" title="Microsoft Login">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#D83B01"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/></svg>
+            </div>
+            <div class="social-btn" title="Facebook Login">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+          </div>
+
+          <div class="toggle-auth">
+            Don't have an account? <a id="showRegister">Sign up</a>
+          </div>
+        </div>
+
+        <!-- Register -->
+        <div class="auth-card" id="registerBlock" hidden>
+          <h2>Create Account</h2>
+          <form id="registerForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="regName" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="regEmail" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+              <label>Mobile Number</label>
+              <input type="tel" id="regMobile" required placeholder="9876543210" pattern="[0-9]{10}">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="regPassword" required minlength="6" placeholder="••••••••" class="input-password">
+            </div>
+            <p class="form-error" id="registerError"></p>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </form>
+
+          <div class="toggle-auth">
+            Already have an account? <a id="showLogin">Log in</a>
+          </div>
+        </div>
+
+        <!-- PROMOTIONAL ADS BANNER ON LOGIN SCREEN -->
+        <div class="login-ad-banner" title="Click to view offer">
+          <div class="ad-icon-badge">🎁</div>
+          <div class="ad-text-content">
+            <h4>Special Cashback Offer!</h4>
+            <p>Get up to ₹100 instant bonus on your first UPI savings deposit today.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <main id="app">
+      <section id="dashScreen" hidden>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">Current Balance</div>
+            <div class="balance-amount" id="balanceFigure">₹ 0</div>
+            
+            <div class="progress-track">
+              <div class="progress-fill" id="goalBarFill"></div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted);" id="goalCaption">No goal set</p>
+
+            <div style="margin-top: 20px;">
+              <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block;">Set Target Goal (₹)</label>
+              <div class="inline-row">
+                <input type="number" id="goalInput" placeholder="10000">
+                <button class="btn btn-secondary" id="btnSetGoal">Set</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Quick Actions</div>
+            
+            <div class="form-group">
+              <label>UPI Deposit</label>
+              <div class="inline-row">
+                <input type="text" id="depositUpi" placeholder="upi@bank">
+                <input type="number" id="depositAmount" placeholder="₹ Amount">
+              </div>
+              <button class="btn btn-primary" id="btnDeposit" style="margin-top: 8px;">Deposit</button>
+              <p class="form-msg" id="depositMsg"></p>
+            </div>
+
+            <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
+
+            <div class="form-group">
+              <label>Withdraw (20% penalty if goal incomplete)</label>
+              <div class="inline-row">
+                <input type="number" id="withdrawAmount" placeholder="₹ Amount">
+                <button class="btn btn-ghost" id="btnWithdrawRequest">Withdraw</button>
+              </div>
+              <p class="form-msg" id="withdrawMsg"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-history">
+          <div class="card-title">Passbook History</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Type</th><th>Amount</th><th>Ref ID</th><th>Details</th></tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+            <p id="historyEmpty" style="text-align: center; color: var(--text-muted); padding: 24px;" hidden>No transactions yet.</p>
+          </div>
+        </div>
+
+        <!-- Feedback Widget -->
+        <div class="card card-feedback">
+          <div class="card-title">Community Reviews & Feedback</div>
+          <div class="form-group">
+            <label>Rate your experience</label>
+            <div class="star-rating" id="starRating">
+              <span data-star="1">★</span>
+              <span data-star="2">★</span>
+              <span data-star="3">★</span>
+              <span data-star="4">★</span>
+              <span data-star="5">★</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Write your review</label>
+            <textarea id="feedbackText" rows="2" placeholder="Share your experience with Piggy Save..."></textarea>
+          </div>
+          <button class="btn btn-secondary" id="btnSubmitFeedback">Submit Review</button>
+          <p class="form-msg" id="feedbackMsg"></p>
+
+          <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 20px 0;">
+
+          <div class="card-title">Recent User Feedbacks</div>
+          <div class="feedback-list" id="feedbackList"></div>
+        </div>
+      </section>
+
+      <!-- Admin Screen -->
+      <section id="adminScreen" hidden>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">Penalty Collected</div>
+            <div class="balance-amount" id="appAccountBalance">₹ 0</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Total Registered Users</div>
+            <div class="balance-amount" id="totalUsersFigure">0</div>
+          </div>
+        </div>
+
+        <div class="card card-history">
+          <div class="card-title">Registered Accounts</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Mobile</th><th>Balance</th></tr>
+              </thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript: Login Happy / Logout Sad Reaction Logic -->
+  <script>
+    function initPiggySaveApp() {
+      const STORAGE_USERS = "piggy_users";
+      const STORAGE_LOGGED_IN = "piggy_current_user";
+      const STORAGE_APP_ACCOUNT = "piggy_app_account";
+      const STORAGE_FEEDBACKS = "piggy_feedbacks";
+
+      let users = JSON.parse(localStorage.getItem(STORAGE_USERS)) || [
+        { name: "Admin", email: "admin@piggy.com", mobile: "0000000000", password: "adminpassword", balance: 0, goal: 0, transactions: [] }
+      ];
+
+      let feedbacks = JSON.parse(localStorage.getItem(STORAGE_FEEDBACKS)) || [
+        { name: "Aarav Mehta", rating: 5, comment: "Amazing passbook app! Goal setting helps me save every month." },
+        { name: "Priya Sharma", rating: 4, comment: "Clean design and very intuitive UI. UPI deposits are instant." }
+      ];
+
+      let currentUserEmail = localStorage.getItem(STORAGE_LOGGED_IN) || null;
+      let appPenaltyBalance = parseFloat(localStorage.getItem(STORAGE_APP_ACCOUNT)) || 0;
+      let selectedRating = 0;
+
+      const squadSvg = document.getElementById("squadSvg");
+      const pupilGroups = document.querySelectorAll(".pupil-group");
+      const speechBubble = document.getElementById("speechBubble");
+
+      /* SPEECH BUBBLE UTILITY */
+      const comments = [
+        "Ouch! That tickles! 🐷",
+        "Keep saving up! 💰",
+        "We love smart savers! ✨",
+        "Bunny says Hi! 🐰",
+        "Bear is proud of you! 🐻",
+        "Meow! Save big! 🐱"
+      ];
+
+      function triggerSpeechBubble(targetBubble, text) {
+        if (!targetBubble) return;
+        targetBubble.textContent = text;
+        targetBubble.classList.add("active");
+        setTimeout(() => {
+          targetBubble.classList.remove("active");
+        }, 2800);
+      }
+
+      if (squadSvg) {
+        squadSvg.addEventListener("click", () => {
+          const randomComment = comments[Math.floor(Math.random() * comments.length)];
+          triggerSpeechBubble(speechBubble, randomComment);
+        });
+      }
+
+      /* FLOATING MASCOT SCROLL REACTIONS */
+      const floatingMascot = document.getElementById("floatingMascot");
+      const scrollSpeechBubble = document.getElementById("scrollSpeechBubble");
+
+      if (floatingMascot) {
+        floatingMascot.addEventListener("click", () => {
+          const scrollComments = [
+            "Great progress! 📈",
+            "Keep up the savings! 💡",
+            "Goal almost reached! 🎯",
+            "Piggy power! 🐷"
+          ];
+          const randomText = scrollComments[Math.floor(Math.random() * scrollComments.length)];
+          triggerSpeechBubble(scrollSpeechBubble, randomText);
+        });
+      }
+
+      /* ALL ANIMALS CURSOR EYE TRACKING */
+      document.addEventListener("mousemove", (e) => {
+        if (!squadSvg || squadSvg.classList.contains("emotion-shy") || squadSvg.classList.contains("emotion-sad")) return;
+
+        const rect = squadSvg.getBoundingClientRect();
+        const svgCenterX = rect.left + rect.width / 2;
+        const svgCenterY = rect.top + rect.height / 2;
+
+        const angle = Math.atan2(e.clientY - svgCenterY, e.clientX - svgCenterX);
+        const distance = Math.min(3.8, Math.hypot(e.clientX - svgCenterX, e.clientY - svgCenterY) / 38);
+
+        const moveX = Math.cos(angle) * distance;
+        const moveY = Math.sin(angle) * distance;
+
+        pupilGroups.forEach(pupil => {
+          pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+      });
+
+      /* HOVER EMOTION TRIGGERS FOR SQUAD */
+      document.querySelectorAll(".input-password").forEach(input => {
+        input.addEventListener("mouseenter", () => squadSvg && squadSvg.classList.add("emotion-shy"));
+        input.addEventListener("focus", () => squadSvg && squadSvg.classList.add("emotion-shy"));
+        input.addEventListener("mouseleave", () => squadSvg && squadSvg.classList.remove("emotion-shy"));
+        input.addEventListener("blur", () => squadSvg && squadSvg.classList.remove("emotion-shy"));
+      });
+
+      document.querySelectorAll(".btn-primary").forEach(btn => {
+        btn.addEventListener("mouseenter", () => squadSvg && squadSvg.classList.add("emotion-excited"));
+        btn.addEventListener("mouseleave", () => squadSvg && squadSvg.classList.remove("emotion-excited"));
+      });
+
+      const withdrawBtn = document.getElementById("btnWithdrawRequest");
+      if (withdrawBtn) {
+        withdrawBtn.addEventListener("mouseenter", () => squadSvg && squadSvg.classList.add("emotion-nervous"));
+        withdrawBtn.addEventListener("mouseleave", () => squadSvg && squadSvg.classList.remove("emotion-nervous"));
+      }
+
+      /* Dark Mode Toggle Logic */
+      const btnThemeToggle = document.getElementById("btnThemeToggle");
+      if (btnThemeToggle) {
+        btnThemeToggle.addEventListener("click", () => {
+          document.body.classList.toggle("dark-mode");
+          const isDark = document.body.classList.contains("dark-mode");
+          btnThemeToggle.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+        });
+      }
+
+      const topnav = document.getElementById("topnav");
+      const navUserName = document.getElementById("navUserName");
+      const btnAdminToggle = document.getElementById("btnAdminToggle");
+      const btnLogout = document.getElementById("btnLogout");
+
+      const authScreen = document.getElementById("authScreen");
+      const dashScreen = document.getElementById("dashScreen");
+      const adminScreen = document.getElementById("adminScreen");
+
+      const loginBlock = document.getElementById("loginBlock");
+      const registerBlock = document.getElementById("registerBlock");
+      const showRegister = document.getElementById("showRegister");
+      const showLogin = document.getElementById("showLogin");
+
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+      const loginError = document.getElementById("loginError");
+      const registerError = document.getElementById("registerError");
+
+      const balanceFigure = document.getElementById("balanceFigure");
+      const goalBarFill = document.getElementById("goalBarFill");
+      const goalCaption = document.getElementById("goalCaption");
+      const goalInput = document.getElementById("goalInput");
+      const btnSetGoal = document.getElementById("btnSetGoal");
+
+      const depositUpi = document.getElementById("depositUpi");
+      const depositAmount = document.getElementById("depositAmount");
+      const btnDeposit = document.getElementById("btnDeposit");
+      const depositMsg = document.getElementById("depositMsg");
+
+      const withdrawAmount = document.getElementById("withdrawAmount");
+      const btnWithdrawRequest = document.getElementById("btnWithdrawRequest");
+      const withdrawMsg = document.getElementById("withdrawMsg");
+
+      const historyBody = document.getElementById("historyBody");
+      const historyEmpty = document.getElementById("historyEmpty");
+
+      const appAccountBalance = document.getElementById("appAccountBalance");
+      const totalUsersFigure = document.getElementById("totalUsersFigure");
+      const usersBody = document.getElementById("usersBody");
+
+      const starRating = document.getElementById("starRating");
+      const btnSubmitFeedback = document.getElementById("btnSubmitFeedback");
+      const feedbackText = document.getElementById("feedbackText");
+      const feedbackMsg = document.getElementById("feedbackMsg");
+      const feedbackList = document.getElementById("feedbackList");
+
+      setupEventListeners();
+      renderApp();
+
+      function renderApp() {
+        if (!currentUserEmail) {
+          authScreen.hidden = false;
+          dashScreen.hidden = true;
+          adminScreen.hidden = true;
+          topnav.hidden = true;
+          return;
+        }
+
+        topnav.hidden = false;
+        const user = getCurrentUser();
+        if (!user) { logout(); return; }
+
+        navUserName.textContent = user.name;
+        btnAdminToggle.hidden = (user.email !== "admin@piggy.com");
+
+        if (dashScreen.dataset.activeView === "admin") {
+          renderAdminScreen();
+        } else {
+          renderDashboard(user);
+        }
+      }
+
+      function renderDashboard(user) {
+        authScreen.hidden = true;
+        dashScreen.hidden = false;
+        adminScreen.hidden = true;
+
+        balanceFigure.textContent = `₹ ${user.balance.toLocaleString("en-IN")}`;
+
+        const goal = user.goal || 0;
+        if (goal > 0) {
+          const percentage = Math.min(Math.round((user.balance / goal) * 100), 100);
+          goalBarFill.style.width = `${percentage}%`;
+          goalCaption.textContent = `Target: ₹${goal.toLocaleString("en-IN")} (${percentage}% completed)`;
+        } else {
+          goalBarFill.style.width = "0%";
+          goalCaption.textContent = "No goal set";
+        }
+
+        renderTransactionTable(user.transactions, historyBody, historyEmpty);
+        renderFeedbacks();
+      }
+
+      function renderAdminScreen() {
+        authScreen.hidden = true;
+        dashScreen.hidden = true;
+        adminScreen.hidden = false;
+
+        appAccountBalance.textContent = `₹ ${appPenaltyBalance.toLocaleString("en-IN")}`;
+        totalUsersFigure.textContent = users.filter(u => u.email !== "admin@piggy.com").length;
+
+        usersBody.innerHTML = "";
+        users.forEach(u => {
+          if (u.email === "admin@piggy.com") return;
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${u.name}</td><td>${u.email}</td><td>${u.mobile}</td><td>₹ ${u.balance}</td>`;
+          usersBody.appendChild(tr);
+        });
+      }
+
+      function renderTransactionTable(transactions, targetBody, emptyElem) {
+        targetBody.innerHTML = "";
+        if (!transactions || transactions.length === 0) {
+          if (emptyElem) emptyElem.hidden = false;
+          return;
+        }
+        if (emptyElem) emptyElem.hidden = true;
+
+        transactions.slice().reverse().forEach(t => {
+          const tr = document.createElement("tr");
+          let typeClass = t.type === "WITHDRAWAL" ? "type-withdrawal" : (t.type === "PENALTY" ? "type-penalty" : "type-deposit");
+          tr.innerHTML = `<td>${t.date}</td><td class="${typeClass}">${t.type}</td><td>₹ ${t.amount}</td><td>${t.upiRef || "-"}</td><td>${t.details || "-"}</td>`;
+          targetBody.appendChild(tr);
+        });
+      }
+
+      function renderFeedbacks() {
+        if (!feedbackList) return;
+        feedbackList.innerHTML = "";
+        feedbacks.slice().reverse().forEach(f => {
+          const div = document.createElement("div");
+          div.className = "feedback-item";
+          div.innerHTML = `
+            <div class="feedback-user">
+              <span>${f.name}</span>
+              <span class="feedback-stars">${"★".repeat(f.rating)}</span>
+            </div>
+            <div>${f.comment}</div>
+          `;
+          feedbackList.appendChild(div);
+        });
+      }
+
+      function triggerLoginHappyAnimation() {
+        if (squadSvg) {
+          squadSvg.classList.remove("emotion-sad", "emotion-shy");
+          squadSvg.classList.add("emotion-excited");
+          triggerSpeechBubble(speechBubble, "Welcome back! Yay! 🎉");
+          setTimeout(() => {
+            squadSvg.classList.remove("emotion-excited");
+          }, 3500);
+        }
+      }
+
+      function setupEventListeners() {
+        if (showRegister) showRegister.addEventListener("click", () => { loginBlock.hidden = true; registerBlock.hidden = false; });
+        if (showLogin) showLogin.addEventListener("click", () => { loginBlock.hidden = false; registerBlock.hidden = true; });
+
+        if (starRating) {
+          starRating.addEventListener("click", (e) => {
+            if (e.target.dataset.star) {
+              selectedRating = parseInt(e.target.dataset.star);
+              Array.from(starRating.children).forEach((star, index) => {
+                star.classList.toggle("active", index < selectedRating);
+              });
+            }
+          });
+        }
+
+        if (btnSubmitFeedback) {
+          btnSubmitFeedback.addEventListener("click", () => {
+            const comment = feedbackText.value.trim();
+            if (selectedRating === 0 || !comment) {
+              feedbackMsg.style.color = "var(--accent-pink)";
+              feedbackMsg.textContent = "Kripya rating aur comment dono bharein!";
+              return;
+            }
+
+            const user = getCurrentUser();
+            feedbacks.push({ name: user ? user.name : "Anonymous", rating: selectedRating, comment });
+            localStorage.setItem(STORAGE_FEEDBACKS, JSON.stringify(feedbacks));
+
+            feedbackMsg.style.color = "var(--accent-green)";
+            feedbackMsg.textContent = "Aapka review submit ho gaya hai!";
+            feedbackText.value = "";
+            selectedRating = 0;
+            Array.from(starRating.children).forEach(s => s.classList.remove("active"));
+            renderFeedbacks();
+          });
+        }
+
+        /* LOGIN FORM SUBMIT (TRIGGER HAPPY ANIMATION 😄) */
+        if (loginForm) {
+          loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+              currentUserEmail = user.email;
+              localStorage.setItem(STORAGE_LOGGED_IN, currentUserEmail);
+              triggerLoginHappyAnimation();
+              renderApp();
+            } else {
+              loginError.textContent = "Invalid email or password.";
+            }
+          });
+        }
+
+        /* REGISTER FORM SUBMIT (TRIGGER HAPPY ANIMATION 😄) */
+        if (registerForm) {
+          registerForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("regName").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const mobile = document.getElementById("regMobile").value.trim();
+            const password = document.getElementById("regPassword").value;
+
+            if (users.some(u => u.email === email)) {
+              registerError.textContent = "Email is already registered.";
+              return;
+            }
+
+            const newUser = { name, email, mobile, password, balance: 0, goal: 0, transactions: [] };
+            users.push(newUser);
+            saveUsers();
+            currentUserEmail = newUser.email;
+            localStorage.setItem(STORAGE_LOGGED_IN, currentUserEmail);
+            triggerLoginHappyAnimation();
+            renderApp();
+          });
+        }
+
+        if (btnLogout) btnLogout.addEventListener("click", logout);
+        if (btnAdminToggle) {
+          btnAdminToggle.addEventListener("click", () => {
+            dashScreen.dataset.activeView = dashScreen.dataset.activeView === "admin" ? "" : "admin";
+            renderApp();
+          });
+        }
+
+        if (btnSetGoal) {
+          btnSetGoal.addEventListener("click", () => {
+            const val = parseFloat(goalInput.value);
+            if (val > 0) {
+              const user = getCurrentUser();
+              user.goal = val;
+              saveUsers();
+              goalInput.value = "";
+              renderApp();
+            }
+          });
+        }
+
+        if (btnDeposit) {
+          btnDeposit.addEventListener("click", () => {
+            const upi = depositUpi.value.trim();
+            const amt = parseFloat(depositAmount.value);
+            if (!upi || isNaN(amt) || amt <= 0) return;
+
+            const user = getCurrentUser();
+            user.balance += amt;
+            user.transactions.push({
+              date: new Date().toLocaleDateString(),
+              type: "DEPOSIT",
+              amount: amt,
+              upiRef: "UPI" + Math.floor(100000 + Math.random() * 900000),
+              details: `UPI: ${upi}`
+            });
+            saveUsers();
+            depositUpi.value = ""; depositAmount.value = "";
+            renderApp();
+          });
+        }
+
+        if (btnWithdrawRequest) {
+          btnWithdrawRequest.addEventListener("click", () => {
+            const amt = parseFloat(withdrawAmount.value);
+            const user = getCurrentUser();
+            if (isNaN(amt) || amt <= 0 || amt > user.balance) return;
+
+            const isGoalMet = user.goal > 0 && user.balance >= user.goal;
+            const penalty = isGoalMet ? 0 : amt * 0.20;
+            const netPayout = amt - penalty;
+
+            user.balance -= amt;
+            user.transactions.push({
+              date: new Date().toLocaleDateString(),
+              type: "WITHDRAWAL",
+              amount: netPayout,
+              upiRef: "WD" + Math.floor(100000 + Math.random() * 900000),
+              details: "Withdrawal payout"
+            });
+
+            if (penalty > 0) {
+              user.transactions.push({
+                date: new Date().toLocaleDateString(),
+                type: "PENALTY",
+                amount: penalty,
+                upiRef: "-",
+                details: "20% Early withdrawal penalty"
+              });
+              appPenaltyBalance += penalty;
+              localStorage.setItem(STORAGE_APP_ACCOUNT, appPenaltyBalance);
+            }
+
+            saveUsers();
+            withdrawAmount.value = "";
+            renderApp();
+          });
+        }
+      }
+
+      function getCurrentUser() { return users.find(u => u.email === currentUserEmail); }
+      function saveUsers() { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
+      
+      /* LOGOUT WITH SAD ANIMATION TRIGGER 🥺 */
+      function logout() { 
+        currentUserEmail = null; 
+        localStorage.removeItem(STORAGE_LOGGED_IN); 
+        renderApp();
+
+        // Make animals sad on logout
+        if (squadSvg) {
+          squadSvg.classList.add("emotion-sad");
+          triggerSpeechBubble(speechBubble, "Miss you! Come back soon... 🥺");
+          setTimeout(() => {
+            squadSvg.classList.remove("emotion-sad");
+          }, 4500);
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initPiggySaveApp);
+  </script>
+</body>
+</html>
