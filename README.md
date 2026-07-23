@@ -174,7 +174,7 @@ Piggy-Save---Smart-Savings-Passbook-
 
 <br>
 
-Frontend Developer
+Data Analyst
 
 <br><br>
 
