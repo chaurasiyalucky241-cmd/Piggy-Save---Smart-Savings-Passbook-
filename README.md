@@ -1,8 +1,14 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5E8A,50:F78FB3,100:C56CF0&height=280&section=header&text=Piggy%20Save&fontSize=60&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=Smart%20Savings%20Passbook%20For%20Friends%20%26%20Families&descAlignY=60"/>
+<div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=900&size=34&duration=2500&pause=1000&color=FF5E8A&center=true&vCenter=true&width=900&lines=Smart+Savings+Passbook;Modern+Banking+Frontend;Built+with+HTML+CSS+JavaScript;Responsive+Glassmorphism+UI" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5E8A,50:F78FB3,100:C56CF0&height=260&section=header&text=Piggy%20Save&fontSize=60&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=Smart%20Savings%20Passbook&descAlignY=60"/>
+
+<br>
+
+<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=34&duration=3000&pause=1000&color=FF5E8A&center=true&vCenter=true&width=900&lines=Piggy+Save;Smart+Savings+Passbook;Modern+Frontend+Project;Built+with+HTML+CSS+JavaScript"/>
+
+</div>
 
 <br>
 
