@@ -1,24 +1,26 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=FF5E8A,D946EF&height=240&section=header&text=🐷%20Piggy%20Save&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Smart%20Savings%20Passbook%20For%20Friends%20%26%20Families&descAlignY=60&descSize=20"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=260&color=0:FF6B9A,50:F78FB3,100:C56CF0&text=🐷%20Piggy%20Save&fontColor=ffffff&fontSize=55&fontAlignY=38&desc=Smart%20Savings%20Passbook%20%7C%20Modern%20Finance%20Application&descAlignY=60&animation=fadeIn"/>
 
-<p align="center">
-<img src="https://readme-typing-svg.demolab.com?font=Poppins&size=28&duration=3000&pause=1000&color=FF5E8A&center=true&vCenter=true&width=700&lines=Smart+Savings+Passbook;Modern+Banking+Experience;Save+Smarter+Grow+Together" />
-</p>
+<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=28&duration=3000&pause=1000&color=FF5E8A&center=true&vCenter=true&width=800&lines=Smart+Savings+Passbook;Modern+Frontend+Project;Digital+Piggy+Bank;Responsive+Banking+Application;Built+with+HTML+CSS+JavaScript" />
 
-<p align="center">
+<br>
 
-<img src="https://img.shields.io/github/repo-size/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-?style=for-the-badge">
+<img src="https://img.shields.io/github/stars/chaurasiyalucky241-cmd/YOUR_REPOSITORY_NAME?style=for-the-badge&color=FF5E8A">
 
-<img src="https://img.shields.io/github/license/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-?style=for-the-badge">
+<img src="https://img.shields.io/github/forks/chaurasiyalucky241-cmd/YOUR_REPOSITORY_NAME?style=for-the-badge&color=C56CF0">
 
-<img src="https://img.shields.io/github/last-commit/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-?style=for-the-badge">
+<img src="https://img.shields.io/github/repo-size/chaurasiyalucky241-cmd/YOUR_REPOSITORY_NAME?style=for-the-badge&color=4CAF50">
 
-<img src="https://img.shields.io/badge/Version-1.0-ff5e8a?style=for-the-badge">
+<img src="https://img.shields.io/github/last-commit/chaurasiyalucky241-cmd/YOUR_REPOSITORY_NAME?style=for-the-badge&color=2196F3">
 
-<img src="https://img.shields.io/badge/Responsive-Yes-success?style=for-the-badge">
+<img src="https://img.shields.io/badge/Version-1.0-FF5E8A?style=for-the-badge">
 
-</p>
+<img src="https://img.shields.io/badge/Responsive-Yes-00C853?style=for-the-badge">
+
+<br><br>
+
+### 💰 Save Smarter • Track Better • Grow Together
 
 </div>
 
@@ -26,153 +28,98 @@
 
 # 🐷 Piggy Save
 
-### 💖 Smart Savings Passbook for Friends & Families
+### Smart Savings Passbook for Friends & Families
 
-Piggy Save is a beautiful and modern **Digital Savings Passbook** inspired by online banking applications.
-
-It provides an interactive interface where users can securely manage savings, monitor transactions, set financial goals, and enjoy a fun experience with adorable mascot characters.
-
-The project focuses on combining **clean UI**, **responsive design**, and **smooth animations** to create a delightful frontend experience.
+Piggy Save is a modern digital savings application designed with a clean UI, smooth animations, and an engaging user experience. Users can manage savings, track transactions, and visualize financial growth through an interactive frontend.
 
 ---
 
-# ✨ Features
+## 🚀 Features
 
-- 🐷 Cute Piggy Mascot
+- 🔐 Beautiful Login Interface
 - 💰 Digital Savings Passbook
-- 🔐 Beautiful Login Page
+- 📊 Dashboard UI
 - 🌙 Dark Mode
-- 🎯 Savings Goals
-- 📊 Transaction History
-- 📱 Fully Responsive
-- ⚡ Smooth Animations
-- ❤️ Modern Glassmorphism UI
-- 🎨 Attractive Color Palette
+- 🎯 Goal Tracking
+- 📱 Responsive Design
+- ✨ Smooth Animations
+- 🎨 Modern Banking UI
+- 🐷 Cute Mascot Design
 
 ---
 
-# 🛠️ Built With
+## 🛠 Tech Stack
 
 <p align="center">
 
-<img src="https://skillicons.dev/icons?i=html,css,javascript,vscode,git,github" />
+<img src="https://skillicons.dev/icons?i=html,css,javascript,vscode,git,github"/>
 
 </p>
 
 ---
 
-# 📸 Project Preview
+## 📸 Screenshots
 
-## 🏠 Home Page
+| Login |
+|-------|
+| <img src="./screenshots/login.png"/> |
 
-<p align="center">
-<img src="./preview.png" width="900">
-</p>
-
----
-
-## 🔐 Login Page
-
-<p align="center">
-<img src="./login.png" width="900">
-</p>
+| Dashboard | Passbook |
+|-----------|-----------|
+| <img src="./screenshots/dashboard.png"/> | <img src="./screenshots/passbook.png"/> |
 
 ---
 
-## 📊 Dashboard
+## 📂 Project Structure
 
-<p align="center">
-<img src="./dashboard.png" width="900">
-</p>
-
----
-
-## 💰 Savings Passbook
-
-<p align="center">
-<img src="./passbook.png" width="900">
-</p>
-
----
-
-# 📂 Folder Structure
-
-```
+```text
 Piggy-Save/
 │
 ├── index.html
 ├── style.css
 ├── script.js
-├── README.md
-│
-├── assets
-│   ├── images
-│   ├── icons
-│   ├── fonts
-│   └── animations
-│
-└── screenshots
-    ├── preview.png
-    ├── login.png
-    ├── dashboard.png
-    └── passbook.png
+├── assets/
+├── screenshots/
+└── README.md
 ```
 
 ---
 
-# 🚀 Getting Started
-
-## Clone Repository
+## ⚡ Installation
 
 ```bash
-git clone https://github.com/chaurasiyalucky241-cmd/Piggy-Save---Smart-Savings-Passbook-.git
+git clone https://github.com/chaurasiyalucky241-cmd/YOUR_REPOSITORY_NAME.git
 ```
-
-Open project
 
 ```bash
-cd Piggy-Save---Smart-Savings-Passbook-
+cd YOUR_REPOSITORY_NAME
 ```
 
-Run
-
-```
-Open index.html
-```
+Open **index.html**
 
 ---
 
-# 🎯 Future Enhancements
+## 🌟 Future Features
 
+- 📱 Mobile App
 - 💳 UPI Integration
-
-- ☁️ Cloud Database
-
-- 📱 Android Application
-
-- 🔔 Push Notifications
-
-- 📊 Savings Analytics
-
-- 👨‍👩‍👧 Shared Family Wallet
-
-- 🤖 AI Saving Recommendations
-
-- 💹 Monthly Financial Reports
+- ☁ Cloud Storage
+- 📈 Savings Analytics
+- 🤖 AI Saving Suggestions
+- 👨‍👩‍👧 Family Wallet
 
 ---
 
-# 🤝 Collaborators
+## 🤝 Collaborators
 
 <table align="center">
-
 <tr>
 
 <td align="center">
 
 <a href="https://github.com/chaurasiyalucky241-cmd">
 
-<img src="https://github.com/chaurasiyalucky241-cmd.png" width="140px">
+<img src="https://github.com/chaurasiyalucky241-cmd.png" width="120"/>
 
 <br>
 
@@ -182,25 +129,23 @@ Open index.html
 
 <br>
 
-Java Developer
+**Frontend Developer**
 
-<br><br>
+<br>
 
 <a href="https://github.com/chaurasiyalucky241-cmd">
-
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
-
+<img src="https://img.shields.io/badge/Profile-181717?style=for-the-badge&logo=github">
 </a>
 
 </td>
 
-<td width="120"></td>
+<td width="80"></td>
 
 <td align="center">
 
 <a href="https://github.com/ankitkumar25s">
 
-<img src="https://github.com/ankitkumar25s.png" width="140px">
+<img src="https://github.com/ankitkumar25s.png" width="120"/>
 
 <br>
 
@@ -210,48 +155,25 @@ Java Developer
 
 <br>
 
-Frontend Developer
+**Frontend Developer**
 
-<br><br>
+<br>
 
 <a href="https://github.com/ankitkumar25s">
-
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
-
+<img src="https://img.shields.io/badge/Profile-181717?style=for-the-badge&logo=github">
 </a>
 
 </td>
 
 </tr>
-
 </table>
-
----
-
-# 🌟 Support
-
-If you found this project useful,
-
-⭐ Star this Repository
-
-🍴 Fork this Repository
-
-💖 Share it with your friends
-
----
-
-# 📄 License
-
-This project is licensed under the **MIT License**.
 
 ---
 
 <div align="center">
 
-## ❤️ Made with Love
+### ⭐ If you like this project, give it a Star ⭐
 
-### Lucky Chaurasiya ❤️ Ankit Kumar
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=D946EF,FF5E8A&height=140&section=footer"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=130&section=footer&color=0:C56CF0,100:FF6B9A"/>
 
 </div>
