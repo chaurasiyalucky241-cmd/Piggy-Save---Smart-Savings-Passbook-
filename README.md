@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=260&color=0:FF6B9A,50:F78FB3,100:C56CF0&text=🐷%20Piggy%20Save&fontColor=ffffff&fontSize=55&fontAlignY=38&desc=Smart%20Savings%20Passbook%20%7C%20Modern%20Finance%20Application&descAlignY=60&animation=fadeIn"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=260&color=0:FF6B9A,50:F78FB3,100:C56CF0&text=%20Piggy%20Save&fontColor=ffffff&fontSize=55&fontAlignY=38&desc=Smart%20Savings%20Passbook%20%7C%20Modern%20Finance%20Application&descAlignY=60&animation=fadeIn"/>
 
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=28&duration=3000&pause=1000&color=FF5E8A&center=true&vCenter=true&width=800&lines=Smart+Savings+Passbook;Modern+Frontend+Project;Digital+Piggy+Bank;Responsive+Banking+Application;Built+with+HTML+CSS+JavaScript" />
 
